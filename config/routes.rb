@@ -13,8 +13,15 @@ Rails.application.routes.draw do
     end
   end
   
+#   resources :users, [:show,:create,:destroy] do
+#   member do
+#     [ここに定義]
+#   end
+# end
+
   resources :microposts, only: [:create, :destroy]
   resources :relationships, only: [:create, :destroy]
+  resources :favorites, only: [:create, :destroy]
   
 end
 
