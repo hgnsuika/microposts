@@ -11,13 +11,13 @@ class User < ApplicationRecord
   has_many :followings, through: :relationships, source: :follow
   has_many :reverses_of_relationship, class_name: 'Relationship', foreign_key: 'follow_id'
   has_many :followers, through: :reverses_of_relationship, source: :user
-#followings とfollowersの違い
+
 
 #以下お気に入りタスクのためのもの
   has_many :favorites
-  has_many :add_favorite, through: :favorites, source: :micropost
-  
-  
+  has_many :favorite_microposts, through: :favorites, source: :micropost
+  has_many :favorite_exist, through: :favorites, source: :micropost
+
   def follow(other_user)
     unless self == other_user
       self.relationships.find_or_create_by(follow_id: other_user.id)
@@ -38,19 +38,18 @@ class User < ApplicationRecord
   end
   
  
-  def add_favorite(micropost_id)
-    unless user_id == micropost_id
-      self.favorites.find_or_create_by(user_id: micropost.id)
-    end
+  def favorite_microposts(micropost)
+    self.favorites.find_or_create_by(micropost_id: micropost.id)
   end
 
-  def remove_favorite(micropost_id)
-    favorite = self.favorites.find_by(user_id: micropost.id)
+  def remove_favorite(micropost)
+    favorite = self.favorites.find_by(micropost_id: micropost.id)
     favorite.destroy if favorite
   end
 
-  def my_favorite?(micropost_id)
-    self.my_favorites?.include?(micropist.id)
+  def favorite_exist?(micropost)
+    self.favorite_exist.include?(micropost)
   end
 
+  
 end
