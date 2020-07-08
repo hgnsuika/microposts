@@ -51,5 +51,6 @@ class User < ApplicationRecord
     self.favorite_exist.include?(micropost)
   end
 
+
   
 end

@@ -5,14 +5,15 @@ before_action :require_user_logged_in
     micropost = Micropost.find(params[:micropost_id])
     current_user.favorite_microposts(micropost)
     flash[:success] = 'お気に入りに追加しました。'
-    redirect_to micropost
+    redirect_to root_url
   end
 
   def destroy
     micropost = Micropost.find(params[:micropost_id])
     current_user.remove_favorite(micropost)
     flash[:success] = 'お気に入りから外しました。'
-    redirect_to micropost
+    redirect_to root_url
+    
   end
   
 end
