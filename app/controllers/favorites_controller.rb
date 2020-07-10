@@ -3,7 +3,7 @@ before_action :require_user_logged_in
   
   def create
     micropost = Micropost.find(params[:micropost_id])
-    current_user.favorite_microposts(micropost)
+    current_user.favorite(micropost)
     flash[:success] = 'お気に入りに追加しました。'
     redirect_to root_url
   end
